@@ -15,58 +15,23 @@
 
 <%# Main Content %>
 <div class="container">
-
-
-  <%# Example %>
   <h1>Exercises</h1>
-
   <div class="list-group">
-    <div class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
-      Variables
-    </div>
-    <a href="#" class="list-group-item list-group-item-action">
-      Variables and Names
-      <span class="badge badge-secondary">✓</span>
-    </a>
+    <%- @units.each do |unit| %>
+      <div class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+        <%= unit.name %>
+      </div>
 
-    <a href="#" class="list-group-item list-group-item-action">
-      More Variables and Printing
-      <span class="badge badge-secondary">✓</span>
-    </a>
+      <%- unit.exercises.each do |exercise| %>
+        <a href=<%= exercise.link.blank? ? "#" : exercise.link %> class="list-group-item list-group-item-action">
+          <%= exercise.name %>
+          
+          <span class="badge badge-secondary">✓</span>
+        </a>
+      <% end %>
+    <% end %>
 
-    <a href="#" class="list-group-item list-group-item-action">
-      Name, Age, and Salary
-    </a>
-
-    <a href="#" class="list-group-item list-group-item-action">
-      Using Variables
-    </a>
-  </div>
-
-
-  <br/>
-
-  <div class="list-group">
-    <div class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
-      Keyboard Input
-    </div>
-    <a href="#" class="list-group-item list-group-item-action">
-      Asking Questions
-      <span class="badge badge-secondary">✓</span>
-    </a>
-
-    <a href="#" class="list-group-item list-group-item-action">
-      The Forgetful Machine
-      <span class="badge badge-secondary">✓</span>
-    </a>
-
-    <a href="#" class="list-group-item list-group-item-action">
-      Name, Age, and Salary
-    </a>
-
-    <a href="#" class="list-group-item list-group-item-action">
-      More User Input of Data
-    </a>
-  </div>
-
+  </div> 
+  <%- #list group %>
+  
 </div>
