@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+
+.signin-wrapper {
+  width: 400px;
+}
+
+body {
+
+  background-color: black;
+
+}
