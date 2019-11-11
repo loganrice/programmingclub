@@ -13,7 +13,6 @@
  *= require_tree .
  *= require_self
  */
-
 .signin-wrapper {
   width: 400px;
 }

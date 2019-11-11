@@ -1,4 +1,5 @@
 @import './bootstrap_custom.scss';
+@import './fontawesome-custom.scss';
 
 
 .signin-wrapper {
@@ -6,4 +7,33 @@
   margin: auto;
 }
 
+.submission-form {
+  justify-content: flex-end
+}
+
+.exercise-header {
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  background-color: #d6d8db;
+  color: #383d41;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.exercise:hover {
+  cursor:pointer;
+  background-color: #f8f9fa;
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit;
+}
+
+.exercise {
+  padding: .75rem 1.25rem;
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit;
+  display:block;
+  margin-bottom: -1px;
+  cursor:pointer;
+}
 

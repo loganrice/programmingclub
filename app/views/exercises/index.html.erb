@@ -30,22 +30,47 @@
 <%# Main Content %>
 <div class="container">
   <h1>Exercises</h1>
-  <div class="list-group">
     <%- @units.each do |unit| %>
-      <div class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
-        <%= unit.name %>
-      </div>
 
-      <%- unit.exercises.each do |exercise| %>
-        <a href=<%= exercise.link.blank? ? "#" : exercise.link %> class="list-group-item list-group-item-action">
-          <%= exercise.name %>
-          
-          <span class="badge badge-secondary">✓</span>
-        </a>
-      <% end %>
+      <table class="table table-sm">
+        <thead class="bg-secondary">
+          <tr class="exercise-header">
+            <th scope="col" colspan="2">
+              <%= unit.name %>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        <%- unit.exercises.each do |exercise| %>
+            <tr>
+              <td>
+                <a href=<%= exercise.link.blank? ? "#" : exercise.link %> class="exercise">
+                  <%= exercise.name %>
+                </a>
+              </td>
+              <td class="text-right">
+
+                <%- submission = @submissions.where(exercise_id: exercise.id, user_id: current_user.id).first %>
+                <%- if submission.blank? %>
+                  <%= form_for(:exercises, :url => exercises_path(:exercise), html: { class: "form-inline submission-form"} ) do |f| %>
+                    <div class="form-group">
+                      <%= f.file_field :file, class: "form-control-file" %>
+                      <%= f.hidden_field :exercise_id, value: exercise.id %>
+                    </div>
+                    <%= f.submit 'Submit', class: "btn btn-small btn-outline-secondary text-right" %>
+                  <% end %> 
+
+                <%- else %>
+                    <%= link_to submission.file.filename.to_s, rails_blob_path(submission.file, disposition: "attachment"), class: "btn btn-small btn-outline-primary" %>
+                    <%= link_to "Delete", submission_path(@submissions.where(exercise_id: exercise.id, user_id: current_user.id).first), method: :delete, data: { confirm: 'Are you certain you want to delete this?' }, class: "btn btn-small btn-outline-danger" %>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table> 
+      <%- #list group %>
     <% end %>
-
-  </div> 
-  <%- #list group %>
+  
   
 </div>
