@@ -20,22 +20,12 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="https://repl.it/@LoganRice1/Java-Project" target="_blank">Sandbox</a>
+            <a class="nav-link" href="https://repl.it" target="_blank">Sandbox</a>
           </li>
         </ul>
 
-        <% if user_signed_in? %>
-          <li>
+        <%- if current_user %>
           <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "btn btn-outline-secondary") %>        
-          </li>
-        <% else %>
-          <li>
-            <%= form_for(:user, :url => session_path(:user), html: { class: "form-inline mt-2 mt-md-0"} ) do |f| %>
-              <%= f.text_field :email, placeholder: "email", class: "form-control mr-sm-2" %>
-              <%= f.password_field :password, placeholder: "password", class: "form-control mr-sm-2"%>
-              <%= f.submit 'Sign in', class: "btn btn-outline-success my-2 my-sm-0" %>
-            <% end %> 
-          </li>
         <% end %>
       </div>
     </nav>
