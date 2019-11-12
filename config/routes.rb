@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   root 'exercises#index'
   resources :exercises
   resources :submissions
+  resources :users, only: :create
   devise_for :users
 end
