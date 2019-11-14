@@ -13,7 +13,7 @@
 
     <%# Nav Bar %>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Programming Club</a>
+      <%= link_to "Programming Club", root_path, class: "navbar-brand" %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -22,6 +22,12 @@
           <li class="nav-item">
             <a class="nav-link" href="https://repl.it" target="_blank">Sandbox</a>
           </li>
+          <%- if current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to('GradeBook', submissions_path, class: "nav-link") %>        
+            </li>
+          <% end %>
+
         </ul>
 
         <%- if current_user %>
