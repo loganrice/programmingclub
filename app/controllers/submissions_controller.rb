@@ -9,6 +9,10 @@ class SubmissionsController < ApplicationController
     #@print = @gradebook.print
   end
 
+  def grades
+    @submissions = GradesService.new(current_user).print
+  end
+
   def show
     @submission = Submission.find(params[:id])
     if @submission && @submission.respond_to?(:file)

@@ -1,0 +1,21 @@
+<%- @submissions.each do |date, submission| %>
+  <h3><%= date %> week</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Exercise</th>
+        <th scope="col">Points Earned</th>
+        <th scope="col">Points Possible</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- submission.each do |s| %>
+        <tr>
+          <td><%= s.exercise.name %></td>
+          <td><%= s.graded_points %> </td>
+          <td><%= s.exercise.points %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
