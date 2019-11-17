@@ -1,9 +1,6 @@
-<h1>Submissions</h1>
 
-
-<%= @units.each do |k, exercises| %>
-  <h4><%= k %></h4>
   <table class="table">
+
     <thead class="thead-dark">
       <tr>
         <th scope="col"> Email </th>
@@ -16,11 +13,12 @@
       </tr>
     </thead>
     <tbody>
-      <% exercises.each do |sub| %>
+
+      <% exercise.submissions.each do |sub| %>
         <tr>
-          <td><%= sub.email %></td>
-          <td><%= sub.name %></td>
-          <td><%= sub.points %></td>
+          <td><%= sub.user.email %></td>
+          <td><%= sub.exercise.name %></td>
+          <td><%= sub.exercise.points %></td>
           <td>
             <div class="btn-group" role="group" aria-label="Basic example">
               <%= link_to "0%", submission_path(sub.id, percentage:0), remote: true, class: "grade btn btn-secondary", method: :put %>
@@ -29,12 +27,11 @@
               <%= link_to "100%", submission_path(sub.id, percentage:100), remote: true, class: "grade btn btn-secondary", method: :put %>
             </div>
           </td>
-
           <td id=<%= "graded-points-#{sub.id}" %>> <%= sub.graded_points %></td>
- 
-          <td><%= link_to "FILE", submission_path(sub.id), target: "_black", class: "btn btn-small btn-outline-primary" %></td>
+          <td><%= link_to sub.file.filename.to_s, submission_path(sub.id), target: "_black", class: "btn btn-small btn-outline-primary" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
-    <% end %>
+<% end %>
+%>

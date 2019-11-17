@@ -13,7 +13,7 @@
         <tr>
           <td><%= s.exercise.name %></td>
           <td><%= s.graded_points %> </td>
-          <%- total  +=  s.graded_points %>
+          <%- total  +=  s.graded_points.blank? ? 0 : s.graded_points %>
         </tr>
       <% end %>
       <tr class="table-info"><td><strong>Total</strong></td><td><span class="badge badge-secondary badge-pill"><%= total%></span></td></tr>
