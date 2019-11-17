@@ -2,8 +2,9 @@ class Gradebook
   attr_reader :users, :units, :active_unit
 
   def initialize(unit_id)
-    @users = User.all.includes(:submissions)
-    @units = Unit.all.includes(:users, :exercises, :submissions)
+    @users = User.all.joins(:submissions).where(submissions: { graded_points: nil })
+
+    @units = Unit.all.includes(:users, :exercises).joins(:submissions).where(submissions: { graded_points: nil })
     set_active_unit(unit_id)
   end
 
@@ -14,7 +15,7 @@ class Gradebook
   end
 
   def submissions
-    @submissions ||= Submission.where(exercise: @active_unit.exercises).includes(:user)
+    @submissions ||= Submission.where(exercise: @active_unit.exercises, graded_points: nil ).includes(:user)
   end
 
   def print
