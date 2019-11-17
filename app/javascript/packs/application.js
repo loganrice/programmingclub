@@ -18,3 +18,5 @@ import './bootstrap_custom.js'
 // const imagePath = (name) => images(name, true)
 
 import 'bootstrap/dist/js/bootstrap';
+import './gradebook.js';
+

@@ -29,7 +29,8 @@ class SubmissionsController < ApplicationController
     percentage = params[:percentage].to_f / 100
     @s.graded_points = (@s.exercise.points * percentage).ceil
     @s.save
-    redirect_to action: :index, active_unit_id: @s.unit.id
+    #redirect_to action: :index, active_unit_id: @s.unit.id
+    render json: { submission: { id: @s.id, graded_points: @s.graded_points }}
   end
 
   def destroy

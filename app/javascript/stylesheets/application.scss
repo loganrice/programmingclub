@@ -37,3 +37,10 @@
   cursor:pointer;
 }
 
+.grades-table {
+  max-width: 600px;
+  th:first-child {
+    width:  90%;
+  }
+}
+

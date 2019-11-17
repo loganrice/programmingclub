@@ -33,13 +33,13 @@
           <td><%= sub.exercise.points %></td>
           <td>
             <div class="btn-group" role="group" aria-label="Basic example">
-              <%= link_to "0%", submission_path(sub.id, percentage:0), class: "btn btn-secondary", method: :put %>
-              <%= link_to "50%", submission_path(sub.id, percentage:50), class: "btn btn-secondary", method: :put %>
-              <%= link_to "80%", submission_path(sub.id, percentage:80), class: "btn btn-secondary", method: :put %>
-              <%= link_to "100%", submission_path(sub.id, percentage:100), class: "btn btn-secondary", method: :put %>
+              <%= link_to "0%", submission_path(sub.id, percentage:0), remote: true, class: "grade btn btn-secondary", method: :put %>
+              <%= link_to "50%", submission_path(sub.id, percentage:50), remote: true, class: "grade btn btn-secondary", method: :put %>
+              <%= link_to "80%", submission_path(sub.id, percentage:80), remote: true, class: "grade btn btn-secondary", method: :put %>
+              <%= link_to "100%", submission_path(sub.id, percentage:100), remote: true, class: "grade btn btn-secondary", method: :put %>
             </div>
           </td>
-          <td><%= sub.graded_points %></td>
+          <td id=<%= "graded-points-#{sub.id}" %>> <%= sub.graded_points %></td>
           <td><%= link_to sub.file.filename.to_s, submission_path(sub.id), target: "_black", class: "btn btn-small btn-outline-primary" %></td>
         </tr>
       <% end %>

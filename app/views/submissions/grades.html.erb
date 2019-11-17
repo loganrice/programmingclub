@@ -1,21 +1,22 @@
 <%- @submissions.each do |date, submission| %>
   <h3><%= date %> week</h3>
-  <table class="table">
+  <table class="table grades-table" >
     <thead>
       <tr>
-        <th scope="col">Exercise</th>
+        <th scope="col" >Exercise</th>
         <th scope="col">Points Earned</th>
-        <th scope="col">Points Possible</th>
       </tr>
     </thead>
     <tbody>
+      <%- total = 0 %>
       <%- submission.each do |s| %>
         <tr>
           <td><%= s.exercise.name %></td>
           <td><%= s.graded_points %> </td>
-          <td><%= s.exercise.points %> </td>
+          <%- total  +=  s.graded_points %>
         </tr>
       <% end %>
+      <tr class="table-info"><td><strong>Total</strong></td><td><span class="badge badge-secondary badge-pill"><%= total%></span></td></tr>
     </tbody>
   </table>
 <% end %>
