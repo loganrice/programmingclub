@@ -6,6 +6,25 @@ class ExercisesController < ApplicationController
     @submissions = current_user.submissions
   end
 
+
+  def mass_edit
+    @exercises = Exercise.all
+  end
+
+  def update
+    if current_user.admin?
+      @exercise = Exercise.find(params[:id])
+      @exercise.update(link: params[:exercise][:link], name: params[:exercise][:name], points: params[:points])
+    end
+
+    if @exercise.save
+      redirect_to :mass_edit
+    else
+      render :update, flash[:errors] = @exercises.errors
+    end
+
+  end
+
   def create
     begin 
       if params[:exercises][:file].present?

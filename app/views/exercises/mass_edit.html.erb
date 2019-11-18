@@ -1,0 +1,10 @@
+<H1>Exercises</h1>
+<%- @exercises.each do |ex| %>
+  <%= form_with model: ex do |f| %>
+    <%= f.text_field :name, class: "form-control" %>
+    <%= f.text_area :link, class: "form-control" %>
+    <%= f.text_field :points, class: "form-control" %>
+    <%= f.submit "Update", class: "btn btn-success" %>
+  <% end %>
+  <br/>
+<% end %>

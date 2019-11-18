@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
 
-  def index
+  def gradebook
     @active_unit_id = params[:active_unit_id].present? ? params[:active_unit_id] : Unit.first.try(:id)
     @units = GradebookService.new(@active_unit_id ).units
     #@units = @gradebook.units

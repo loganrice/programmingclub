@@ -29,6 +29,9 @@
                   <%= f.file_field :file, required: true, class: "form-control-file" %>
                   <%= f.hidden_field :exercise_id, value: exercise.id %>
                 </div>
+                <%- if current_user.admin? %>
+              
+                <% end %>
                 <%= f.submit 'Submit', class: "btn btn-small btn-outline-secondary text-right" %>
               <% end %> 
 

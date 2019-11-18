@@ -28,8 +28,13 @@
           </li>
           <%- if current_user.try(:admin?) %>
             <li class="nav-item">
-              <%= link_to('GradeBook', submissions_path, class: "nav-link") %>        
+              <%= link_to('GradeBook', gradebook_path, class: "nav-link") %>        
             </li>
+            <li class="nav-item">
+              <%= link_to('Exercises', mass_edit_path, class: "nav-link") %>        
+            </li>
+
+
           <% end %>
 
         </ul>

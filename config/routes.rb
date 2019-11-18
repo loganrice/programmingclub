@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   resources :submissions
 
   get 'grades', to: "submissions#grades"
+  get 'gradebook', to: "submissions#gradebook"
+  get 'mass_edit', to: "exercises#mass_edit"
 end
