@@ -4,15 +4,11 @@ class SubmissionsController < ApplicationController
     respond_to do |format|
       format.html do 
 
-        logger.debug "WTF"
         @active_unit_id = params[:active_unit_id].present? ? params[:active_unit_id] : Unit.first.try(:id)
         @units = GradebookService.new(@active_unit_id ).units
 
       end
       format.csv { 
-
-        logger.debug "WTFcsv"
-        #render text: "WLKJDLFJS"
         send_data GradebookService.new.to_csv, disposition: "attachment", filename: "grades-#{Date.today}.csv" 
         }
     end

@@ -14,7 +14,7 @@ class ExercisesController < ApplicationController
   def update
     if current_user.admin?
       @exercise = Exercise.find(params[:id])
-      @exercise.update(link: params[:exercise][:link], name: params[:exercise][:name], points: params[:points], exclude: params[:exercise][:exclude])
+      @exercise.update(link: params[:exercise][:link], name: params[:exercise][:name], points: params[:exercise][:points], exclude: params[:exercise][:exclude])
     end
 
     if @exercise.save

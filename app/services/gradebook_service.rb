@@ -27,6 +27,7 @@ class GradebookService
       LEFT JOIN units
       on units.id = ex.unit_id
       where graded_points IS NULL
+      AND ex.exclude IS NOT true 
       ORDER BY ex.name
     DOC
 
@@ -49,28 +50,35 @@ class GradebookService
     weeks = Submission.group(:created_at).order(created_at: :desc).sum(:graded_points).keys.uniq
     weeks = weeks.map { |week| week.to_date.strftime('%Y-%W') }.uniq
     result = []
-    records = Submission.joins(:user).all.group_by { |s| s.user.email }
+    #records = Submission.joins(:user).joins.all.group_by { |s| s.user.email }
+
+    records = Submission
+                .joins(:user)
+                .joins(:exercise)
+                .where("exercises.exclude IS NULL OR exercises.exclude = false")
+                .group_by { |s| s.user.email }
+
     records.each do |email, submissions|
       record = {}
       record["student id"] = email.gsub(/[^\d]/, "")
-      submissions.each do |sub|
-        weeks.each do | week|
-          week = week
-          if record[week]
-            record[week] += sub.graded_points if sub.graded_points
-          else
-            record[week] = 0 
-          end
-        end
 
+      weeks.each do | week|
+        record[week] = 0 
       end
+
+      submissions.each do |sub|
+        sub_week = sub.created_at.to_date.strftime('%Y-%W')
+        points = sub.graded_points.nil? ? 0 : sub.graded_points 
+        record[sub_week ] += points
+      end
+
       result.append(record.values)
     end
     result
     # To a String
     return csv_string = CSV.generate do |csv|
       csv << ["student id"].append(weeks).flatten
-      csv << result.flatten
+      result.each { |r| csv << r.flatten }
     end
 
   end
