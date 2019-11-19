@@ -1,7 +1,9 @@
+require 'csv'
+
 class GradebookService
   attr_reader :users, :units, :active_unit
 
-  def initialize(unit_id)
+  def initialize(unit_id=nil)
     @units = ungraded(unit_id)
     set_active_unit(unit_id)
   end
@@ -9,6 +11,8 @@ class GradebookService
   def set_active_unit(unit_id)
     if unit_id != nil
       @active_unit ||= Unit.find(unit_id)
+    else
+      @active_unit = nil
     end
   end
 
@@ -30,11 +34,45 @@ class GradebookService
   end
 
   def submissions
-    @submissions ||= Submission.where(exercise: @active_unit.exercises, graded_points: nil ).includes(:user)
+    if @active_unit
+      @submissions ||= Submission.where(exercise: @active_unit.exercises, graded_points: nil ).includes(:user)
+    else
+      @submissions ||= Submission.includes(:user).all
+    end
   end
 
   def file_paths
     @submissions.select
+  end
+
+  def to_csv
+    weeks = Submission.group(:created_at).order(created_at: :desc).sum(:graded_points).keys.uniq
+    weeks = weeks.map { |week| week.to_date.strftime('%Y-%W') }.uniq
+    result = []
+    records = Submission.joins(:user).all.group_by { |s| s.user.email }
+    records.each do |email, submissions|
+      record = {}
+      record["student id"] = email.gsub(/[^\d]/, "")
+      submissions.each do |sub|
+        weeks.each do | week|
+          week = week
+          if record[week]
+            record[week] += sub.graded_points if sub.graded_points
+          else
+            record[week] = 0 
+          end
+        end
+
+      end
+      result.append(record.values)
+    end
+    result
+    # To a String
+    return csv_string = CSV.generate do |csv|
+      csv << ["student id"].append(weeks).flatten
+      csv << result.flatten
+    end
+
   end
 
   def print

@@ -1,5 +1,5 @@
 <h1>Submissions</h1>
-
+<%= link_to "Run Report", gradebook_path(format: :csv), class: "btn btn-success" %>
 
 <%- @units.each do |k, exercises| %>
   <h4><%= k %></h4>
