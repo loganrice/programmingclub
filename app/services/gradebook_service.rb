@@ -60,6 +60,7 @@ class GradebookService
 
     records.each do |email, submissions|
       record = {}
+      record["email"] = email
       record["student id"] = email.gsub(/[^\d]/, "")
 
       weeks.each do | week|
@@ -77,7 +78,7 @@ class GradebookService
     result
     # To a String
     return csv_string = CSV.generate do |csv|
-      csv << ["student id"].append(weeks).flatten
+      csv << ["email", "student id"].append(weeks).flatten
       result.each { |r| csv << r.flatten }
     end
 
