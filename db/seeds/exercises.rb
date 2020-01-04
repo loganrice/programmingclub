@@ -9,8 +9,8 @@ unitsNames = [
   "If Statements",
   "Random Numbers",
   "While Loops",
-  "For Loops",
   "Functions",
+  "For Loops",
   "Nested Loops",
   "File Input and Output",
   "Arrays",
@@ -19,8 +19,10 @@ unitsNames = [
   "ArrayLists"
 ]
 
-unitsNames.each do |unit|
-  Unit.find_or_create_by(name: unit)
+unitsNames.each_with_index do |unit, i|
+  record = Unit.find_or_create_by(name: unit)
+  record.order = i
+  record.save
 end
 
 
@@ -31,12 +33,11 @@ fn = File.join(Rails.root, 'db', 'seeds', 'exercises.csv')
 # columns exercsises.csv Assignment, Points, Link, Unit
 exercises = CSV.parse(File.read(fn), headers: true)
 
-exercises.each do |exercise|
-  Exercise.find_or_create_by(
-    name: exercise["Assignment"],
-    link: exercise["Link"],
-    points: exercise["Points"],
-    unit_id: Unit.find_or_create_by(name: exercise["Unit"]).id  
-  )
+exercises.each_with_index do |exercise, i|
+  record = Exercise.find_or_create_by(name: exercise["Assignment"])
+  record.link = exercise["Link"]
+  record.points = exercise["Points"]
+  record.order = i
+  record.save
 end
 

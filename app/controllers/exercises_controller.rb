@@ -2,7 +2,7 @@ class ExercisesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @units = Unit.all
+    @units = Unit.all.includes(:exercises).order("units.order").order("exercises.order")
     @submissions = current_user.submissions
   end
 
