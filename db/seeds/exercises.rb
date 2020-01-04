@@ -22,7 +22,7 @@ unitsNames = [
 unitsNames.each_with_index do |unit, i|
   record = Unit.find_or_create_by(name: unit)
   record.order = i
-  record.save
+  Rails.logger record.errors.full_messages if(!record.save) 
 end
 
 
@@ -38,6 +38,6 @@ exercises.each_with_index do |exercise, i|
   record.link = exercise["Link"]
   record.points = exercise["Points"]
   record.order = i
-  record.save
+  Rails.logger record.errors.full_messages if(!record.save) 
 end
 
