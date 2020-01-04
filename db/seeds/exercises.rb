@@ -38,6 +38,7 @@ exercises.each_with_index do |exercise, i|
   record.link = exercise["Link"]
   record.points = exercise["Points"]
   record.order = i
+  record.unit_id = Unit.find_by(name: exercise["Unit"]).id
   record.save
 end
 
